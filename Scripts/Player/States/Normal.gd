@@ -10,19 +10,19 @@ var actionPressed = false
 # first array is player ID (Sonic, Tails, Knuckles), second array is the idle number
 # note: idle is always played first
 # you'll want to increase this for the number of playable characters
-var playerIdles = [
+#var playerIdles = [
 # SONIC
-["idle1","idle2","idle2","idle2","idle2","idle3",
-"idle4","idle4","idle4","idle4","idle4","idle4","idle4","idle4","idle4","idle4",
-"idle4","idle4","idle4","idle4","idle4","idle4","idle4","idle4","idle4","idle4",
-"idle5"],
+#["idle1","idle2","idle2","idle2","idle2","idle3",
+#"idle4","idle4","idle4","idle4","idle4","idle4","idle4","idle4","idle4","idle4",
+#"idle4","idle4","idle4","idle4","idle4","idle4","idle4","idle4","idle4","idle4",
+#"idle5"],
 # Tails
-["idle1"], # Note: Tails idle loops on idle one, to add more idles make sure to disable his idle1 loop
+#["idle1"], # Note: Tails idle loops on idle one, to add more idles make sure to disable his idle1 loop
 # Knuckles
-["idle1"],
+#["idle1"],
 # Amy
-["idle1","idle1","idle1","idle1","idle1","idle1","idle1","idle1","idle2","idle3"] # Note: like Tails, Amy loops on idle3
-]
+#["idle1","idle1","idle1","idle1","idle1","idle1","idle1","idle1","idle2","idle3"] # Note: like Tails, Amy loops on idle3
+#]
 
 func state_exit():
 	skid = false
@@ -44,7 +44,7 @@ func _process(delta):
 			parent.animator.play("spinDash")
 			parent.set_state(parent.STATES.SPINDASH)
 		# peelout (Sonic only)
-		elif (parent.movement.x == 0 and parent.inputs[parent.INPUTS.YINPUT] < 0 and parent.character == parent.CHARACTERS.SONIC):
+		elif (parent.movement.x == 0 and parent.inputs[parent.INPUTS.YINPUT] < 0 and parent.character == Global.CHARACTERS.SONIC):
 			parent.sfx[2].play()
 			parent.sfx[2].pitch_scale = 1
 			parent.spindashPower = 0
@@ -103,33 +103,33 @@ func _process(delta):
 						
 						# loop through idle animations to see if there is an idle match
 						var matchIdleCheck = false
-						for i in playerIdles[parent.character]:
+						for i in parent.playerIdles:
 							if parent.lastActiveAnimation == i:
 								matchIdleCheck = true
 						
 						if parent.lastActiveAnimation != "idle" and !matchIdleCheck or !parent.animator.is_playing():
 							parent.animator.play("idle")
 							# queue player specific idle animations
-							for i in playerIdles[parent.character]:
+							for i in parent.playerIdles:
 								parent.animator.queue(i)
 				
 				else:
 					match (parent.character):
 						
-						parent.CHARACTERS.TAILS:
-							if getR: # keep flipping until right sensor (relevent) isn't colliding
+						Global.CHARACTERS.TAILS:
+							if getR: # keep flipping until right sensor (relevant) isn't colliding
 								parent.direction = -parent.direction
 							parent.animator.play("edge1")
 						
-						parent.CHARACTERS.KNUCKLES:
-							if getR: # keep flipping until right sensor (relevent) isn't colliding
+						Global.CHARACTERS.KNUCKLES:
+							if getR: # keep flipping until right sensor (relevant) isn't colliding
 								parent.direction = -parent.direction
 							if parent.animator.current_animation != "edge1" and parent.animator.current_animation != "edge2":
 								parent.animator.play("edge1")
 								parent.animator.queue("edge2")
 								
-						parent.CHARACTERS.AMY:
-							if getR: # keep flipping until right sensor (relevent) isn't colliding
+						Global.CHARACTERS.AMY:
+							if getR: # keep flipping until right sensor (relevant) isn't colliding
 								parent.direction = -parent.direction
 							#far edge
 							if !getMEdge:

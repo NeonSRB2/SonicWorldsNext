@@ -16,6 +16,7 @@ class_name CharacterInfo extends Node2D
 @export var crouch_hitbox = Vector2(9,11)*2
 @export var glide_hitbox = Vector2(10,10)*2 # probably specific to knuckles, but each character has all of these.
 @export var horizontal_hitbox = Vector2(22,9)*2 # ... is this even used???
+@export var ground_clipping = 16 # this is specifically for amy, but it should be included here in case a character has a similarly small hitbox
 
 func set_variables():
 	var parent = get_parent()
@@ -26,4 +27,5 @@ func set_variables():
 	parent.playerIdles = idle_order
 	# hitboxes are all in one variable, pack it up
 	parent.currentHitbox = {NORMAL = normal_hitbox, ROLL = roll_hitbox, CROUCH = crouch_hitbox, GLIDE = glide_hitbox, HORIZONTAL = horizontal_hitbox}
+	parent.maxCharGroundHeight = ground_clipping
 	

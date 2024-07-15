@@ -31,9 +31,6 @@ var gameOver = false
 # signal that gets emited once the stage tally is over
 signal tally_clear
 
-# character name strings, used for "[player] has cleared", this matches the players character ID so you'll want to add the characters name in here matching the ID if you want more characters
-# see Global.PlayerChar1
-var characterNames = ["sonic","tails","knuckles","amy"]
 
 func _ready():
 	# error prevention
@@ -87,7 +84,7 @@ func _ready():
 		get_tree().paused = false
 	Global.timerActive = true
 	# replace "sonic" in stage clear to match the player clear string
-	$LevelClear/Passed.text = $LevelClear/Passed.text.replace("SONIC",characterNames[Global.PlayerChar1-1])
+	$LevelClear/Passed.text = $LevelClear/Passed.text.replace("SONIC",Global.players[focusPlayer].characterName)
 	# set the act clear frame
 	$LevelClear/Act.frame = act-1
 

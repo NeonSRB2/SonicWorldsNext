@@ -299,6 +299,7 @@ func _ready():
 		# set my character
 		character = Global.PlayerChar1
 		
+		# GET BACK TO THIS ONE
 		# set super palettes
 		match (character):
 			Global.CHARACTERS.SONIC:
